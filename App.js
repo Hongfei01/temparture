@@ -9,22 +9,27 @@ import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import hotBackground from './assets/hot.png';
 import Input from './components/Input/Input';
+import DisplayTemperature from './components/DisplayTemperature/DisplayTemperature';
 
 export default function App() {
   const [inputVal, setInputVal] = useState(0);
+  const [currentUnit, setCurrentUnit] = useState('°C');
+  console.log(inputVal);
   return (
     <ImageBackground style={styles.background} source={hotBackground}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.root}>
-          <KeyboardAvoidingView behavior='position'>
-            <View style={styles.workspace}>
-              <Text>Temperature</Text>
+          <View style={styles.workspace}>
+            <DisplayTemperature temperature={inputVal} unit={currentUnit} />
 
-              <Input defaultValue={inputVal} onChangeText={setInputVal} />
+            <Input
+              defaultValue={inputVal.toString()}
+              onChangeText={setInputVal}
+              unit={currentUnit}
+            />
 
-              <Text>Convert</Text>
-            </View>
-          </KeyboardAvoidingView>
+            <Text>Convert</Text>
+          </View>
         </SafeAreaView>
       </SafeAreaProvider>
     </ImageBackground>

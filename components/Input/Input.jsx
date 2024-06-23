@@ -1,26 +1,22 @@
-import {
-  TextInput,
-  View,
-  Text,
-  Keyboard,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
 
 import style from './style';
-const Input = ({ defaultValue, onChangeText }) => {
+const Input = ({ defaultValue, onChangeText, unit }) => {
   return (
-    <View style={style.rootContainer}>
-      <TextInput
-        style={style.input}
-        defaultValue={defaultValue}
-        onChangeText={(text) => onChangeText(text)}
-        maxLength={3}
-        keyboardType='number-pad'
-        autoCapitalize='none'
-        autoCorrect={false}
-      />
-      <Text style={style.unit}>°C</Text>
-    </View>
+    <KeyboardAvoidingView behavior='position' style={style.rootContainer}>
+      <View style={style.rootContainer}>
+        <TextInput
+          keyboardType='number-pad'
+          style={style.input}
+          value={defaultValue}
+          onChangeText={(text) => onChangeText(text)}
+          maxLength={3}
+          autoCapitalize='none'
+          autoCorrect={false}
+        />
+        <Text style={style.unit}>{unit}</Text>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
