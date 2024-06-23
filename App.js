@@ -1,7 +1,14 @@
-import { StyleSheet, Text, ImageBackground, View } from 'react-native';
-import { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  ImageBackground,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
+import { useEffect, useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import hotBackground from './assets/hot.png';
+import coldBackground from './assets/cold.png';
 import Input from './components/Input/Input';
 import DisplayTemperature from './components/DisplayTemperature/DisplayTemperature';
 
@@ -9,20 +16,29 @@ import {
   UNITS,
   convertTemperatureTo,
   getOppsiteUnit,
+  isIcedTemperature,
 } from './units/temperature';
+import ButtonConvert from './components/ButtonConvert/ButtonConvert';
 
 export default function App() {
   const [inputVal, setInputVal] = useState(0);
   const [currentUnit, setCurrentUnit] = useState('°C');
   const oppsiteUnit = getOppsiteUnit(currentUnit);
+  const [currentBackground, setCurrentBackground] = useState(coldBackground);
 
+  useEffect(() => {
+    if (isIcedTemperature(inputVal, currentUnit)) {
+      setCurrentBackground(coldBackground);
+    } else {
+      setCurrentBackground(hotBackground);
+    }
+  }, [inputVal, currentUnit]);
   function getConvertedTemperature() {
     if (isNaN(inputVal)) return '';
     else return convertTemperatureTo(inputVal, oppsiteUnit).toFixed(2);
   }
-  console.log(inputVal);
   return (
-    <ImageBackground style={styles.background} source={hotBackground}>
+    <ImageBackground style={styles.background} source={currentBackground}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.root}>
           <View style={styles.workspace}>
@@ -37,7 +53,10 @@ export default function App() {
               unit={currentUnit}
             />
 
-            <Text>Convert</Text>
+            <ButtonConvert
+              unit={oppsiteUnit}
+              onPress={() => setCurrentUnit(oppsiteUnit)}
+            />
           </View>
         </SafeAreaView>
       </SafeAreaProvider>

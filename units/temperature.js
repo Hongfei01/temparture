@@ -16,4 +16,12 @@ function convertTemperatureTo(temperature, unitTo) {
 function getOppsiteUnit(unit) {
   return unit === UNITS.celcius ? UNITS.farahneit : UNITS.celcius;
 }
-export { UNITS, convertTemperatureTo, getOppsiteUnit };
+
+function isIcedTemperature(temperature, unit) {
+  if (unit === UNITS.celcius) {
+    return temperature <= 0;
+  } else if (unit === UNITS.farahneit) {
+    return temperature * 1.8 <= 32;
+  }
+}
+export { UNITS, convertTemperatureTo, getOppsiteUnit, isIcedTemperature };
