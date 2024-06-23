@@ -5,7 +5,7 @@ const Input = ({ defaultValue, onChangeText, unit }) => {
   return (
     <View style={style.rootContainer}>
       <TextInput
-        keyboardType='default'
+        keyboardType='number-pad'
         style={style.input}
         value={defaultValue}
         onChangeText={(text) => onChangeText(text)}

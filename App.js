@@ -4,6 +4,7 @@ import {
   ImageBackground,
   View,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -41,23 +42,30 @@ export default function App() {
     <ImageBackground style={styles.background} source={currentBackground}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.root}>
-          <View style={styles.workspace}>
-            <DisplayTemperature
-              temperature={getConvertedTemperature()}
-              unit={oppsiteUnit}
-            />
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <KeyboardAvoidingView
+              style={{ flex: 1, justifyContent: 'center' }}
+              behavior='position'
+            >
+              <View style={styles.workspace}>
+                <DisplayTemperature
+                  temperature={getConvertedTemperature()}
+                  unit={oppsiteUnit}
+                />
 
-            <Input
-              defaultValue={inputVal.toString()}
-              onChangeText={setInputVal}
-              unit={currentUnit}
-            />
+                <Input
+                  defaultValue={inputVal.toString()}
+                  onChangeText={setInputVal}
+                  unit={currentUnit}
+                />
 
-            <ButtonConvert
-              unit={oppsiteUnit}
-              onPress={() => setCurrentUnit(oppsiteUnit)}
-            />
-          </View>
+                <ButtonConvert
+                  unit={oppsiteUnit}
+                  onPress={() => setCurrentUnit(oppsiteUnit)}
+                />
+              </View>
+            </KeyboardAvoidingView>
+          </ScrollView>
         </SafeAreaView>
       </SafeAreaProvider>
     </ImageBackground>
@@ -65,6 +73,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   root: {
     flex: 1,
     justifyContent: 'center',
