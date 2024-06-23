@@ -1,26 +1,35 @@
-import {
-  StyleSheet,
-  Text,
-  ImageBackground,
-  View,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { StyleSheet, Text, ImageBackground, View } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import hotBackground from './assets/hot.png';
 import Input from './components/Input/Input';
 import DisplayTemperature from './components/DisplayTemperature/DisplayTemperature';
 
+import {
+  UNITS,
+  convertTemperatureTo,
+  getOppsiteUnit,
+} from './units/temperature';
+
 export default function App() {
   const [inputVal, setInputVal] = useState(0);
   const [currentUnit, setCurrentUnit] = useState('°C');
+  const oppsiteUnit = getOppsiteUnit(currentUnit);
+
+  function getConvertedTemperature() {
+    if (isNaN(inputVal)) return '';
+    else return convertTemperatureTo(inputVal, oppsiteUnit).toFixed(2);
+  }
   console.log(inputVal);
   return (
     <ImageBackground style={styles.background} source={hotBackground}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.root}>
           <View style={styles.workspace}>
-            <DisplayTemperature temperature={inputVal} unit={currentUnit} />
+            <DisplayTemperature
+              temperature={getConvertedTemperature()}
+              unit={oppsiteUnit}
+            />
 
             <Input
               defaultValue={inputVal.toString()}

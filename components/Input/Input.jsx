@@ -6,11 +6,11 @@ const Input = ({ defaultValue, onChangeText, unit }) => {
     <KeyboardAvoidingView behavior='position' style={style.rootContainer}>
       <View style={style.rootContainer}>
         <TextInput
-          keyboardType='number-pad'
+          keyboardType='default'
           style={style.input}
           value={defaultValue}
           onChangeText={(text) => onChangeText(text)}
-          maxLength={3}
+          maxLength={4}
           autoCapitalize='none'
           autoCorrect={false}
         />
